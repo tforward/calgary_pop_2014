@@ -309,7 +309,7 @@ var calgary_neighbourhoods = {
 
 
 var OpenStreetMap_BaW = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
-	minZoom: 10,
+	minZoom: 11,
 	attribution: "<a href='https://www.linkedin.com/in/tristanforward'>Creator</a>&nbsp|&nbsp<a href='https://data.calgary.ca/OpenData/Pages/DatasetDetails.aspx?DatasetID=PDC0-99999-99999-00737-P%28CITYonlineDefault%29'>Metadata</a>&nbsp&copy; <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a>"
 });
 
@@ -378,6 +378,7 @@ function onEachFeature(feature, layer) {
     layer.on({
         mouseover: highlightFeature,
         mouseout: resetHighlight,
+        click: highlightFeature
     });
 }
 
