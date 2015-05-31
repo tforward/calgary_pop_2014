@@ -6,6 +6,7 @@ var lat = 51.0204;
 var lng = -114.0505;
 var zoom = 11;
 var geojson;
+var lastClickedLayer;
 var calgary_neighbourhoods = {
 "type": "FeatureCollection",
 "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
@@ -386,7 +387,7 @@ function clickHighlightFeature(e) {
         layer.bringToFront();
     }
     info.update(layer.feature.properties);
-    var lastClickedLayer = layer;
+    lastClickedLayer = layer;
 }
 
 function resetHighlight(e) {
