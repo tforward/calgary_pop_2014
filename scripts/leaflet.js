@@ -355,7 +355,6 @@ function style(feature) {
 //MOUSE
 function highlightFeature(e) {
     var layer = e.target;
-    geojson.resetStyle(e.target);
 
     layer.setStyle({
         weight: 5,
@@ -370,6 +369,26 @@ function highlightFeature(e) {
     info.update(layer.feature.properties);
 }
 
+function clickHighlightFeature(e) {
+    if(lastClickedLayer){
+        geojson.resetStyle(lastClickedLayer);
+    }
+    var layer = e.target;
+
+    layer.setStyle({
+        weight: 5,
+        color: '#666',
+        dashArray: '',
+        fillOpacity: 0.7
+    });
+
+    if (!L.Browser.ie && !L.Browser.opera) {
+        layer.bringToFront();
+    }
+    info.update(layer.feature.properties);
+    lastClickedLayer = layer;
+}
+
 function resetHighlight(e) {
     geojson.resetStyle(e.target);
     info.update();
@@ -379,7 +398,7 @@ function onEachFeature(feature, layer) {
     layer.on({
         mouseover: highlightFeature,
         mouseout: resetHighlight,
-        click: highlightFeature
+        click: clickHighlightFeature
     });
 }
 
@@ -407,7 +426,7 @@ info.onAdd = function (map) {
 info.update = function (props) {
     this._div.innerHTML = '<h4>Calgary 2014 Population</h4>' +  (props ?
         '<strong>' + toTitleCase(props.NAME) + '</strong>' + '<br><strong>' + props.RES_CNT + ' Calgarians' + '</strong>' 
-        : 'Hover over a community');
+        : 'Select a community');
 };
 
 info.addTo(map);
