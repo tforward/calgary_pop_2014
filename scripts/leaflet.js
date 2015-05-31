@@ -383,9 +383,6 @@ function clickHighlightFeature(e) {
         fillOpacity: 0.7
     });
 
-    if (!L.Browser.ie && !L.Browser.opera) {
-        layer.bringToFront();
-    }
     info.update(layer.feature.properties);
     lastClickedLayer = layer;
 }
