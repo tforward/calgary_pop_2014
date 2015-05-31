@@ -355,6 +355,7 @@ function style(feature) {
 //MOUSE
 function highlightFeature(e) {
     var layer = e.target;
+    geojson.resetStyle(e.target);
 
     layer.setStyle({
         weight: 5,
