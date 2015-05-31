@@ -386,7 +386,7 @@ function clickHighlightFeature(e) {
         layer.bringToFront();
     }
     info.update(layer.feature.properties);
-    lastClickedLayer = layer;
+    var lastClickedLayer = layer;
 }
 
 function resetHighlight(e) {
