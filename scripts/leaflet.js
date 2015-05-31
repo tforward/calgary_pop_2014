@@ -307,8 +307,9 @@ var calgary_neighbourhoods = {
 ]
 }
 
+
 var OpenStreetMap_BaW = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
-	minZoom: 11,
+	minZoom: 10,
 	attribution: "<a href='https://www.linkedin.com/in/tristanforward'>Creator</a>&nbsp|&nbsp<a href='https://data.calgary.ca/OpenData/Pages/DatasetDetails.aspx?DatasetID=PDC0-99999-99999-00737-P%28CITYonlineDefault%29'>Metadata</a>&nbsp&copy; <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a>"
 });
 
@@ -317,8 +318,8 @@ function initmap() {
     map = new L.Map('map');
     
     // Lock the map
-    var maxBoundsSouthWest = new L.LatLng(50.85147463352982, -114.33883666992188);
-    var maxBoundsNorthEast = new L.LatLng(51.18838149260999, -113.76205444335938);
+    var maxBoundsSouthWest = new L.LatLng(50.665131428416146, -114.62310791015625);
+    var maxBoundsNorthEast = new L.LatLng(51.37349493730543, -113.477783203125);
     var maxBoundsArea = new L.LatLngBounds(maxBoundsSouthWest, maxBoundsNorthEast);
     map.setMaxBounds(maxBoundsArea);
 
@@ -408,7 +409,7 @@ info.onAdd = function (map) {
 // method that we will use to update the control based on feature properties passed
 info.update = function (props) {
     this._div.innerHTML = '<h4>Calgary 2014 Population</h4>' +  (props ?
-        '</b>' + 'Community: ' + toTitleCase(props.NAME) + '<br><b>' + props.RES_CNT + ' Calgarians' + '</b>' 
+        '<strong>' + toTitleCase(props.NAME) + '</strong>' + '<br><strong>' + props.RES_CNT + ' Calgarians' + '</strong>' 
         : 'Hover over a community');
 };
 
