@@ -33,19 +33,20 @@ initmap();
 
 //STYLE
 function getColor(d) {
-    return d > 15000 ? "#08589e" :
-        d > 10000 	 ? "#2b8cbe" :
-        d > 7000 	 ? "#4eb3d3" :
-        d > 5000 	 ? "#7bccc4" :
-        d > 3000 	 ? "#a8ddb5" :
-        d > 1000 	 ? "#ccebc5" :
-        d > 1 		 ? "#c4e8cd" :
-        			   "#f0f9e8";
+    return d > 7000  ? "#084081" :
+        d > 6000 	 ? "#0868ac" :
+        d > 5000 	 ? "#2b8cbe" :
+        d > 4000 	 ? "#4eb3d3" :
+        d > 3000 	 ? "#7bccc4" :
+        d > 2000 	 ? "#a8ddb5" :
+        d > 1000     ? "#ccebc5" :
+        d > 1        ? "#e0f3db" :
+        			   "#f7fcf0";
 }
 
 function style(feature) {
     return {
-        fillColor: getColor(feature.properties.RES_CNT),
+        fillColor: getColor(feature.properties.DENSITY),
         weight: 2,
         opacity: 0.7,
         color: "white",
@@ -73,9 +74,6 @@ function highlightFeature(e) {
 
 function clickHighlightFeature(e) {
     if (lastClickedLayer) {
-        if (!L.Browser.ie && !L.Browser.opera) {
-        lastClickedLayer.bringToBack();
-    }
         geojson.resetStyle(lastClickedLayer);
     }
     var layer = e.target;
@@ -86,10 +84,6 @@ function clickHighlightFeature(e) {
         dashArray: "",
         fillOpacity: 0.7
     });
-    
-    if (!L.Browser.ie && !L.Browser.opera) {
-        layer.bringToFront();
-    }
 
     info.update(layer.feature.properties);
     lastClickedLayer = layer;
@@ -131,8 +125,8 @@ info.onAdd = function() {
 
 // method that we will use to update the control based on feature properties passed
 info.update = function(props) {
-    this._div.innerHTML = "<h4>Calgary 2014 Population</h4>" + (props ?
-        "<strong>" + toTitleCase(props.NAME) + "</strong>" + "<br><strong>" + props.RES_CNT + " Calgarians" + "</strong>" : "Select a community");
+    this._div.innerHTML = "<h4>Calgary 2014</h4><h4>Population Density</h4> " + (props ?
+        "<strong>" + toTitleCase(props.NAME) + "</strong>" + "<br><strong>" + props.DENSITY + " Calgarians / km<sup>2</sup>" + "</strong>" : "Select a community");
 };
 
 info.addTo(map);
@@ -145,13 +139,18 @@ var legend = L.control({
 legend.onAdd = function() {
 
     var div = L.DomUtil.create("div", "info legend"),
-        grades = [0, 1, 3000, 5000, 7000, 10000, 15000];
+        grades = [0, 1, 1000, 2000, 3000, 4000, 5000, 6000, 7000];
         
     // loop through our density intervals and generate a label with a coloured square for each interval
-    div.innerHTML += "<strong>Calgarians</strong><br>";
+    div.innerHTML += "<strong>Calgarians / km<sup>2</sup></strong><br>";
     for (var i = 0; i < grades.length; i++) {
-        div.innerHTML += "<i style=\"background:" + getColor(grades[i] + 1) + "\"></i> " + grades[i] + (grades[i + 1] ? "&ndash;" + grades[i + 1] + "<br>" : "+");
-    }
+        if (grades[i] === 0){
+            div.innerHTML += "<i style=\"background:" + getColor(grades[i] + 1) + "\"></i> " + grades[i] + (grades[i + 1] ? "<br>" : "+");
+        }
+        else{
+            div.innerHTML += "<i style=\"background:" + getColor(grades[i] + 1) + "\"></i> " + grades[i] + (grades[i + 1] ? "&ndash;" + grades[i + 1] + "<br>" : "+");
+        }
+        }
     return div;
 };
 
