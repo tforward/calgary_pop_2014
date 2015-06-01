@@ -338,7 +338,7 @@ function getColor(d) {
            d > 5000  ? '#7bccc4' :
            d > 3000   ? '#a8ddb5' :
            d > 1000   ? '#ccebc5' :
-           d > 1      ? '#FFEDA0' :
+           d > 1      ? '#d8f0de' :
                         '#f0f9e8';
 }
 
