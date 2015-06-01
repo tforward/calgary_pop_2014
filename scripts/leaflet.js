@@ -73,6 +73,9 @@ function highlightFeature(e) {
 
 function clickHighlightFeature(e) {
     if (lastClickedLayer) {
+        if (!L.Browser.ie && !L.Browser.opera) {
+        lastClickedLayer.bringToBack();
+    }
         geojson.resetStyle(lastClickedLayer);
     }
     var layer = e.target;
@@ -83,6 +86,10 @@ function clickHighlightFeature(e) {
         dashArray: "",
         fillOpacity: 0.7
     });
+    
+    if (!L.Browser.ie && !L.Browser.opera) {
+        layer.bringToFront();
+    }
 
     info.update(layer.feature.properties);
     lastClickedLayer = layer;
@@ -140,9 +147,7 @@ legend.onAdd = function() {
     var div = L.DomUtil.create("div", "info legend"),
         grades = [0, 1, 3000, 5000, 7000, 10000, 15000];
         
-
-    // loop through our density intervals and generate a label with a colored square for each interval
-
+    // loop through our density intervals and generate a label with a coloured square for each interval
     div.innerHTML += "<strong>Calgarians</strong><br>";
     for (var i = 0; i < grades.length; i++) {
         div.innerHTML += "<i style=\"background:" + getColor(grades[i] + 1) + "\"></i> " + grades[i] + (grades[i + 1] ? "&ndash;" + grades[i + 1] + "<br>" : "+");
